@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.taha.fypfinal">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.example.taha.firebase.AABCDFirebase1"
+            android:label="@string/title_activity_aabcdfirebase1"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".NewsDetail" />
+        <activity android:name=".DynamicButtonAdd" />
+        <activity
+            android:name=".CustomizeButton"
+            android:label="@string/title_activity_customize_button"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".CustomizeButton2" />
+        <activity
+            android:name=".ZShowTotalNews"
+            android:label="@string/title_activity_zshow_total_news"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ZSportRec"
+            android:label="@string/title_activity_zsport_rec"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ZPakistanNewsRec"
+            android:label="@string/title_activity_zpakistan_news_rec"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ZBussRec"
+            android:label="@string/title_activity_zbuss_rec"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ZEntertainmentRect"
+            android:label="@string/title_activity_zentertainment_rect"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ZHealthNewsRect"
+            android:label="@string/title_activity_zhealth_news_rect"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ZAmazingNewsRect"
+            android:label="@string/title_activity_zamazing_news_rect"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ZEducationNewsRect"
+            android:label="@string/title_activity_zeducation_news_rect"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".StartNews" />
+        <activity
+            android:name="com.example.taha.firebase.ABCDFirebasePost2"
+            android:label="@string/title_activity_abcdfirebase_post2"
+            android:theme="@style/AppTheme" />
+        <activity android:name="com.example.taha.firebase.SignIn" />
+        <activity
+            android:name="com.example.taha.firebase.Login"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.taha.firebase.ABCDDescr"
+            android:label="@string/title_activity_abcddescr"
+            android:theme="@style/AppTheme"></activity>
+    </application>
+
+</manifest>

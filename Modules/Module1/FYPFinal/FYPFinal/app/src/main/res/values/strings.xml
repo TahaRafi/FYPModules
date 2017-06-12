@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">FYPFinal</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_customize_button">CustomizeButton</string>
+    <string name="title_activity_zshow_total_news">ZShowTotalNews</string>
+    <string name="title_activity_zsport_rec">ZSportRec</string>
+    <string name="title_activity_zpakistan_news_rec">ZPakistanNewsRec</string>
+    <string name="title_activity_zbuss_rec">ZBussRec</string>
+    <string name="title_activity_zentertainment_rect">ZEntertainmentRect</string>
+    <string name="title_activity_zhealth_news_rect">ZHealthNewsRect</string>
+    <string name="title_activity_zamazing_news_rect">ZAmazingNewsRect</string>
+    <string name="title_activity_zeducation_news_rect">ZEducationNewsRect</string>
+    <string name="title_activity_firebase1">Firebase1</string>
+    <string name="title_activity_abcdfirebase1">ABCDFirebase1</string>
+    <string name="title_activity_abcdfirebase_post2">ABCDFirebasePost2</string>
+    <string name="title_activity_aabcdfirebase1">AABCDFirebase1</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_abcdsetup">ABCDSetupActivity</string>
+    <string name="title_activity_abcddescr">ABCDDescr</string>
+</resources>

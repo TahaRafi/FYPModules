@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+table#t01 {
+    width: 100%;    
+    background-color: #f1f1c1;
+}
+</style>
+</head>
+<body>
+    
+
+    
+<div>
+<h1>App data</h1>
+<input type="checkbox"  value="sports" class="checks" >Sports<br>
+<input type="checkbox"  value="politics" class="checks" >Politics<br>
+<input type="checkbox"  value="entertainment" class="checks" >entertainment<br>
+<input type="checkbox"  value="awareness" class="checks" >awareness<br>
+<input type="checkbox"  value="others" class="checks" >others<br>
+<br>
+<input type="button" value="Submit" onclick = "Func()">
+</div>
+    
+    
+
+<h1>Twitter Data</h1>
+
+<h2>Twitter Sports</h2>
+<div>
+<input type="checkbox"  value="wasimakramlive" class="twitter"  >Wasim Akram<br>
+<input type="checkbox"  value="SAfridiOfficial" class="twitter" >Shahid Afridi<br>
+<input type="checkbox"  value="iramizraja" class="twitter" >Ramiz Raja<br>
+<input type="checkbox"  value="captainmisbahpk" class="twitter" >Misbah Ul Haq<br>
+<br>
+<input type="button" value="Submit" onclick = "TwitterNews()">
+    
+</div>
+
+<h2>Twitter News</h2>
+<div>
+<input type="checkbox"  value="geonews_urdu" class="tweet"  >Geo News<br>
+<input type="checkbox"  value="ARYNewsAsiaUrdu" class="tweet" >Ary News<br>
+<input type="checkbox"  value="BOLNewsOfficial" class="tweet" >Bol News<br>
+<input type="checkbox"  value="SAMAATV" class="tweet" >Samaa Tv<br>
+<br>
+<input type="button" value="Submit" onclick = "myTwitter()">
+    
+</div>
+    
+
+
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCwamTjFGxjM9XcgMnHRocSXd5FgxVeFcI",
+    authDomain: "fypfinal-3b689.firebaseapp.com",
+    databaseURL: "https://fypfinal-3b689.firebaseio.com",
+    projectId: "fypfinal-3b689",
+    storageBucket: "fypfinal-3b689.appspot.com",
+    messagingSenderId: "1019510602007"
+  };
+  firebase.initializeApp(config);
+</script>
+
+    
+    
+
+<script>
+var url = window.location.href;
+var params = url.split('?');
+
+    
+    
+    function myTwitter()
+    {
+        var checks = document.getElementsByClassName("tweet");
+        var my_geo = "No";
+        var my_ary = "No";
+        var my_bol = "No";
+        var my_samaa = "No";
+        
+        for(i =0 ; i< checks.length ; i++)
+        {
+            if(checks[i].checked == true)
+                {
+                    //alert(checks[i].value);
+                    //alert(params[1]);
+                    
+                    if(checks[i].value == "geonews_urdu")
+                        {
+                            my_geo = "Yes";
+                        }
+                    else if(checks[i].value == "ARYNewsAsiaUrdu")
+                        {
+                            my_ary = "Yes";
+                        }
+                    else if(checks[i].value == "BOLNewsOfficial")
+                        {
+                            my_bol = "Yes";
+                        }
+                    else if(checks[i].value == "SAMAATV")
+                        {
+                            my_samaa = "Yes"
+                        }
+                    
+                }
+        }
+        
+        
+        var preferenceRef = firebase.database().ref("userController/").child("TwitterNews").child(params[1]);
+    var prefered;
+        
+        preferenceRef.on("value" , preferedsnap =>{
+            prefered = preferedsnap;
+        });
+        
+        preferenceRef.set({
+            Prefered: 
+            {
+                geonews_urdu: my_geo,
+                ARYNewsAsiaUrdu: my_ary,
+                BOLNewsOfficial: my_bol,
+                SAMAATV: my_samaa,
+            }
+            
+            
+        });
+    alert("Sucess");
+
+        
+        
+    }
+    
+    
+    
+function Func() {
+    var checks = document.getElementsByClassName("checks");
+    var my_sports = "No";
+    var my_politics = "No";
+    var my_entertainment = "No";
+    var my_awareness = "No";
+    var my_others = "No";
+    
+    for(i =0 ; i< checks.length ; i++)
+        {
+            if(checks[i].checked == true)
+                {
+                    //alert(checks[i].value);
+                    //alert(params[1]);
+                    
+                    if(checks[i].value == "sports")
+                        {
+                            my_sports = "Yes";
+                        }
+                    else if(checks[i].value == "politics")
+                        {
+                            my_politics = "Yes";
+                        }
+                    else if(checks[i].value == "entertainment")
+                        {
+                            my_entertainment = "Yes";
+                        }
+                    else if(checks[i].value == "awareness")
+                        {
+                            my_awareness = "Yes"
+                        }
+                    else if(checks[i].value == "others")
+                        {
+                            my_others = "Yes";
+                        }
+                }
+        }
+    
+    // now submit that data to firebase
+    var preferenceRef = firebase.database().ref("userController/").child("AppData").child(params[1]);
+    var prefered;
+        
+        preferenceRef.on("value" , preferedsnap =>{
+            prefered = preferedsnap;
+        });
+        
+        preferenceRef.set({
+            Prefered: 
+            {
+                sports: my_sports,
+                politics: my_politics,
+                entertainment: my_entertainment,
+                awareness: my_awareness,
+                others: my_others
+            }
+            
+            
+        });
+    alert("Sucess");
+}
+    
+    function TwitterNews()
+    {
+        var checks = document.getElementsByClassName("twitter");
+        var my_wasim = "No";
+        var my_afridi = "No";
+        var my_ramiz = "No";
+        var my_misbah = "No";
+        
+        
+            for(i =0 ; i< checks.length ; i++)
+        {
+            if(checks[i].checked == true)
+                {
+                    //alert(checks[i].value);
+                    //alert(params[1]);
+                    
+                    if(checks[i].value == "wasimakramlive")
+                        {
+                        my_wasim    = "Yes";
+                        }
+                    else if(checks[i].value == "SAfridiOfficial")
+                        {
+                            my_afridi = "Yes";
+                        }
+                    else if(checks[i].value == "iramizraja")
+                        {
+                            my_ramiz = "Yes";
+                        }
+                    else if(checks[i].value == "captainmisbahpk")
+                        {
+                            my_misbah = "Yes";
+                        }
+                    
+                }
+        }
+        
+        
+            var preferenceRef = firebase.database().ref("userController/").child("TwitterSports").child(params[1]);
+    var prefered;
+        
+        preferenceRef.on("value" , preferedsnap =>{
+            prefered = preferedsnap;
+        });
+        
+        preferenceRef.set({
+            Prefered: 
+            {
+                wasimakramlive: my_wasim,
+                SAfridiOfficial: my_afridi,
+                iramizraja: my_ramiz,
+                captainmisbahpk: my_misbah
+                
+            }
+            
+            
+        });
+    alert("Sucess");
+
+
+        
+        
+    
+    }
+    
+    
+
+</script>
+    
+</body>

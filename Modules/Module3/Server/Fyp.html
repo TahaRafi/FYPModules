@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+table#t01 {
+    width: 100%;    
+    background-color: #f1f1c1;
+}
+</style>
+</head>
+<body>
+
+<table style="width:100%">
+  <thead>
+    <tr>
+    <th>User_id</th>
+    <th>Name</th> 
+    <th>Email</th>
+    <th>Total Posts</th>
+    <th>Total likes</th>
+    <th>Total dislikes</th>
+    <th>Total Views</th>
+    <th>Total Sports</th>
+    <th>Total Politics</th>
+    <th>Total Entertainment</th>
+    <th>Total Awareness</th>
+    <th>Total Others</th>
+    <th>Action</th>
+    <th>Set category</th>
+  </tr>
+      </thead>
+    <tbody id="table_body">
+        
+    </tbody>
+</table>
+<br>
+
+    
+    
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCwamTjFGxjM9XcgMnHRocSXd5FgxVeFcI",
+    authDomain: "fypfinal-3b689.firebaseapp.com",
+    databaseURL: "https://fypfinal-3b689.firebaseio.com",
+    projectId: "fypfinal-3b689",
+    storageBucket: "fypfinal-3b689.appspot.com",
+    messagingSenderId: "1019510602007"
+  };
+  firebase.initializeApp(config);
+</script>
+    
+    <script>
+    
+    var usersRef = firebase.database().ref().child("Users");
+    var blogRef = firebase.database().ref().child("Blog");
+    var likesRef = firebase.database().ref().child("likes");
+    var dislikesRef = firebase.database().ref().child("dislikes");
+    var viewsRef = firebase.database().ref().child("Views");
+    
+                    
+    var blogs;
+    var likes;
+    var dislikes;
+    var views;
+    var my_genre;
+    var prefered;
+        
+         blogRef.on("child_added" , blogsnap =>{
+           blogs =  blogsnap;
+        });
+        
+        
+         likesRef.on("child_added" , likesnap =>{
+           likes =  likesnap;
+        });
+        
+        
+        dislikesRef.on("child_added" , dislikesnap =>{
+           dislikes =  dislikesnap;
+        });
+        
+        
+        viewsRef.on("child_added" , viewsnap =>{
+           view =  viewsnap;
+        });
+        
+        
+        
+    usersRef.on("child_added" , snap=>
+               {
+        
+        var total_post = 0;
+        var total_likes = 0;
+        var total_dislikes = 0;
+        var total_views = 0;
+        
+        
+        //genre of posts
+        
+        var total_sports = 0;
+        var total_politics = 0;
+        var total_awareness =0;
+        var total_entertainment =0;
+        var total_others =0;
+        
+        
+        var uid = snap.key.toString();
+        var name = snap.child("name").val().toString();
+        var email = snap.child("email").val().toString();
+        
+        blogRef.on("child_added" , blogsnap=> {
+           
+            var post_id = blogsnap.key.toString();
+            var post_uid = blogsnap.child("uid").val().toString();
+            
+            if(uid == post_uid)
+                {
+                    
+                    total_post++;
+                }
+            
+           
+            
+        });
+        
+        
+        likesRef.on("child_added" , likesnap=>{
+            
+            var post_key = likesnap.key.toString();
+            
+            if(likesnap.child(uid).val() !=null)
+                {
+                    total_likes++;
+                    
+                    
+                    //this post has been liked by the respective user
+                    //now i need to find genre of the respective post
+                    
+                    
+                    var post_genre = firebase.database().ref().child("Blog").child(post_key).child("genre");
+                   
+                    
+                    post_genre.on('value' , genresnap =>{
+                            my_genre = genresnap;
+                    });
+        
+                    
+                    
+                    
+                    post_genre.on('value' , genresnap =>{
+                        if(genresnap.val()!=null)
+                            {
+                       var genre = genresnap.val().toString();
+                        
+                       if(genre == "sports")
+                           {
+                            total_sports++;   
+                           }
+                        else if(genre == "entertainment")
+                            {
+                            total_entertainment++;
+                            }
+                        else if(genre == "politics")
+                            {
+                                total_politics++;
+                            }
+                        else if(genre == "awareness")
+                            {
+                                total_awareness++;
+                            }
+                        else if(genre == "others")
+                            {
+                                total_others++;
+                            }
+                            }
+                    });
+                   
+                    
+                }
+            
+        });
+        
+        
+        
+        //console.log(total_awareness);
+        //console.log(total_politics);
+        //console.log(total_others);
+        
+        dislikesRef.on("child_added" , dislikesnap =>{
+           
+            
+            var post_key = dislikesnap.key.toString();
+            
+            if(dislikesnap.child(uid).val() != null)
+                {
+                    total_dislikes++;
+                }
+            
+        });
+        
+     
+        
+        viewsRef.on("child_added" , viewsnap =>{
+        
+        var post_key = viewsnap.key.toString();
+        
+            if(viewsnap.child(uid).val() != null)
+                {
+                    total_views++;
+                }
+        
+        });
+        
+        
+        var preferenceRef = firebase.database().ref("userPreference/").child(uid);
+        
+        preferenceRef.on("value" , preferedsnap =>{
+            prefered = preferedsnap;
+        });
+        
+        preferenceRef.set({
+            preffered: 
+            {
+                sports: total_sports,
+                politics: total_politics,
+                entertainment: total_entertainment,
+                awareness: total_awareness,
+                others: total_others
+            }
+            
+            
+        });
+        
+        
+        
+        $("#table_body").append("<tr><td>" + uid + "</td><td>" + name +" </td><td>" + email + "</td><td>" + total_post +"</td><td>"+ total_likes +"</td><td>"+ total_dislikes +"</td><td>"+ total_views +"</td><td>" + total_sports +"</td><td>" + total_politics +"</td><td>" + total_entertainment+"</td><td>" + total_awareness + "</td><td>" + total_others+"</td><td><button id="+ uid +" onclick='myFunc(this.id)'>Remove</button></td><td><button id="+ uid +" onclick='myFunction(this.id)'>Set Category</button></td></tr>");
+        
+        
+        //Here we will add these to the database
+        
+        
+        
+        
+        
+    });
+        
+        
+        
+        
+        //code for deleting a post which has dislikes greater than 50 
+        
+           
+            Refdislikes = firebase.database().ref().child("dislikes");
+            
+            Refdislikes.on("child_added" , dislikesnap =>{
+                
+                //console.log(dislikesnap.key.toString());
+                //console.log(dislikesnap.numChildren());
+                
+                if(dislikesnap.numChildren() > 20)
+                    {
+                        //delete this post
+                        var refPost = firebase.database().ref().child("Blog").child(dislikesnap.key.toString()).remove();
+                    }
+            });
+        
+        
+        
+        
+        
+        
+        function myFunc(id)
+        {
+            //window.alert(id);
+                
+            //deleting the likes of the user
+            var likesRef = firebase.database().ref().child("likes");
+            likesRef.on("child_added" , likesnap =>{
+                
+                if(likesnap.child(id).val() !=null)
+                    {
+                        //console.log("LOLOLOLO");
+                        ref = firebase.database().ref().child("likes").child(likesnap.key.toString()).child(id).remove();
+                    }
+            
+            
+            });
+            
+            //deleting the dislikes of the user
+            
+            var dislikesRef = firebase.database().ref().child("dislikes");
+            dislikesRef.on("child_added" , dislikesnap => {
+                
+                if(dislikesnap.child(id).val() != null)
+                    {
+                        //console.log("lolololo");
+                        ref = firebase.database().ref().child("dislikes").child(dislikesnap.key.toString()).child(id).remove();
+                    }
+                
+            });
+            
+            //deleting the views of the user
+            
+            var viewsRef = firebase.database().ref().child("Views");
+            viewsRef.on("child_added" , viewsnap =>{
+               
+                if(viewsnap.child(id).val() != null)
+                    {
+                        ref = firebase.database().ref().child("Views").child(viewsnap.key.toString()).child(id).remove();
+                    }
+                
+            });
+            
+            
+            //removing the posts of the user
+            
+            var postRef = firebase.database().ref().child("Blog");
+            
+            postRef.on("child_added" , postsnap=>{
+               
+                if(postsnap.child("uid").val().toString() == id)
+                    {
+                        //console.log(postsnap.child("uid").val());
+                        //console.log(postsnap.key);
+                        
+                        ref = firebase.database().ref().child("Blog").child(postsnap.key.toString()).remove();
+                    }
+                
+            });
+            
+            
+            //now we havve to remove user preference
+            var preferenceRef = firebase.database().ref().child("userPreference").child(id).remove();
+            
+            
+            //now we have to remove the user
+            var userRef = firebase.database().ref().child("Users").child(id).remove();
+            
+            
+        }
+        
+        
+        function myFunction(id)
+        {
+            window.location.href = "Fypp.html?" + id;
+        }
+        
+       
+    </script>
+    
+
+</body>
+</html>

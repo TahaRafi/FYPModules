@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1019510602007",
+    "firebase_url": "https://fypfinal-3b689.firebaseio.com",
+    "project_id": "fypfinal-3b689",
+    "storage_bucket": "fypfinal-3b689.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019510602007:android:211836dfc1616aec",
+        "android_client_info": {
+          "package_name": "com.example.taha.fypfinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019510602007-d90g9j9iafo388se9lfuhr1f0l25piho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6nzhW1U3rm3_TjDltqwGwbRhYq1iIowY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
