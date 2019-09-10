@@ -19,7 +19,7 @@ Another feature is that our app will notify its user about an event for example 
 # Background of the Project
 A review of background material that you found, or was provided for the problem. It should contain full citations of articles, books, software packages, www and other media.
 # Project Category
-Our project is product based.
+Our project is research based.
 # Features / Scope / Modules
 
 # Unbiased News.
